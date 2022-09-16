@@ -1,23 +1,47 @@
-import logo from './logo.svg';
-import './App.css';
+import axios from "axios"
 
 function App() {
+  const usersUrl = 'http://localhost:8080/users'
+  const options = {
+    header: { 'Content-Type': 'application/json' }
+  }
+
+  const getHandler = () => {
+    axios.get(usersUrl, options)
+      .then(response => console.log(response))
+  }
+
+  const postHandler = () => {
+    const user = JSON.stringify({
+      email: 'adz@mail.xo',
+      password: '123'
+    })
+
+    axios.post(usersUrl, user, options)
+      .then(response => console.log(response))
+  }
+
+  const putHandler = () => {
+    const user = JSON.stringify({
+      email: 'adzani@mail.com',
+      password: '12345'
+    })
+
+    axios.put(usersUrl + '/1', user, options)
+      .then(response => console.log(response))
+  }
+
+  const deleteHandler = () => {
+    axios.delete(usersUrl + '/1', options)
+      .then(response => console.log(response))
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <button onClick={ getHandler }>GET</button>
+      <button onClick={ postHandler }>POST</button>
+      <button onClick={ putHandler }>PUT</button>
+      <button onClick={ deleteHandler }>DELETE</button>
     </div>
   );
 }
